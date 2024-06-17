@@ -1,0 +1,24 @@
+env_name: huarubattle
+map_name: battle5v5
+# mode: parallel
+mode: host
+episode_limit: 1200
+num_agents: 5
+time_step: 0
+
+config: {
+    "episode_time": 100,   # 训练次数
+    "step_time": 1, # 想定步长
+    'agents': {
+            'red': AloAgent,
+            'blue': TestAgent,
+            # 'blue': HR1.HR1,
+            'self_play_blue': BlueAloAgent
+            }
+}
+
+ADDRESS: {
+    "ip": "127.0.0.1",
+    "port": 11112
+}
+
