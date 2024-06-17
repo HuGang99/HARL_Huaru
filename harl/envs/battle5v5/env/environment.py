@@ -63,11 +63,16 @@ class HuaRuBattleEnvWrapper(EnvRunner):
 
         # 动作空间
         self.action_space = [spaces.Discrete(15), spaces.Discrete(15), spaces.Discrete(15), spaces.Discrete(15), spaces.Discrete(15)]
+        
+        # # 多个动作的动作空间
+        # self.action_space = [spaces.MultiDiscrete([10,6]), spaces.MultiDiscrete([10,6]), spaces.MultiDiscrete([10,6]), spaces.MultiDiscrete([10,6]), spaces.MultiDiscrete([10,6])]
+        # 修改 self.get_avail_actions()，单个Agent的get_avail_actions函数输出为各个动作的mask直接相加的一位数组
+
         # 状态空间
         self.observation_space = [spaces.Box(low=0, high=1, shape=(105,)), spaces.Box(low=0, high=1, shape=(105,)), spaces.Box(low=0, high=1, shape=(105,)), spaces.Box(low=0, high=1, shape=(105,)), spaces.Box(low=0, high=1, shape=(105,))]
-
         #   全局的状态
-        self.share_observation_space  = [[105 * 5, [5, 105]]]
+        self.share_observation_space  = [[105 * 5, [5, 105]], [105 * 5, [5, 105]], [105 * 5, [5, 105]], [105 * 5, [5, 105]], [105 * 5, [5, 105]]]
+
         # 初始化智能体，红方智能体是用于转换仿真的指令；蓝方智能体适用于利用代码规则
         # 记录红蓝方的每帧的states
         self.ori_message = None

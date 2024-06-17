@@ -14,7 +14,7 @@ from harl.envs.battle5v5.agent.demo_agent import DemoAgent
 from harl.envs.battle5v5.agent.MyAgent.test_agent import TestAgent
 # 蓝方超强规则Agents
 
-from harl.envs.battle5v5.agent.HR1 import HR1
+# from harl.envs.battle5v5.agent.HR1 import HR1
 # 是否启用host模式,host仅支持单个xsim
 ISHOST = False
 
@@ -34,8 +34,8 @@ config = {
     "step_time": 1, # 想定步长
     'agents': {
             'red': AloAgent,
-            # 'blue': TestAgent,
-            'blue': HR1.HR1,
+            'blue': TestAgent,
+            # 'blue': HR1.HR1,
             'self_play_blue': BlueAloAgent
             }
 }
