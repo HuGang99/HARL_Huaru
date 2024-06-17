@@ -1,7 +1,6 @@
 ##### Project Specification #####
 **/results/**
 .VSCodeCounter/
-./test.py
 
 ##### Python.gitignore #####
 # Byte-compiled / optimized / DLL files
