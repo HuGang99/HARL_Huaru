@@ -60,6 +60,7 @@ class HuaRuBattleEnvWrapper(EnvRunner):
         # MultiAgentEnv.__init__(self)
         self.env_name = env_args['env_name']
         self.n_agents = env_args['num_agents']
+        self.map_name = env_args['map_name']
 
         # 动作空间
         self.action_space = [spaces.Discrete(15), spaces.Discrete(15), spaces.Discrete(15), spaces.Discrete(15), spaces.Discrete(15)]
@@ -87,6 +88,8 @@ class HuaRuBattleEnvWrapper(EnvRunner):
         self.last_ori_message = None
         # 存取本episode训练的其他信息
         self.infos = None
+        self.battles_won = 0
+        self.battles_game = 0
         self.forward_step = None
         # self.logger = logging.getLogger('Battle_5v5')
         # self.logger.setLevel(logging.DEBUG)
@@ -126,9 +129,8 @@ class HuaRuBattleEnvWrapper(EnvRunner):
         # 获取RL Obs & State
         self.obs = self.get_obs()
         self.state = self.get_state()
-        self.avail_actions = self.get_avail_actions()
 
-        return self.obs, self.state, self.avail_actions # list, np, np
+        return self.obs, self.state, self.get_avail_actions() # list, np, np
 
     def step(self, actions=None, if_test=False):
         """
@@ -209,7 +211,18 @@ class HuaRuBattleEnvWrapper(EnvRunner):
         #     self.logger.console_logger.info(f'Total reward: {self.reward}')
 
         #   return local_obs, global_state, rewards, dones, infos, self.get_avail_actions()
-        return self.obs, self.state, [[cur_reward] for _ in range(self.n_agents)], [if_done for _ in range(self.n_agents)], [self.infos for _ in range(self.n_agents)], self.get_avail_actions()
+        if if_done:
+            self.battles_game += 1
+        if self.infos['BattleWon'] == 2:
+                self.battles_won += 1
+        infos = [{} for i in range(self.n_agents)]
+        for i in range(self.n_agents):
+            infos[i] = {
+                "battles_won": self.battles_won,
+                "battles_game": self.battles_game,
+                "BattleWon": self.infos['BattleWon'],
+            }
+        return self.obs, self.state, [[cur_reward] for _ in range(self.n_agents)], [if_done for _ in range(self.n_agents)], infos, self.get_avail_actions()
 
     def get_blue_cmd(self, blue_agents):
         """获取蓝方当前的cmd_list"""
@@ -733,12 +746,10 @@ class HuaRuBattleEnvWrapper(EnvRunner):
     def render(self):
         pass
 
-
-# if __name__ == '__main__':
-    # """测试环境类"""
-    # print('testing environment')
-    # address = ADDRESS['ip'] + ":" + str(ADDRESS['port'])
-    # print('address:', address)
-    # test_env = HuaRuBattleEnvWrapper(config['agents'], address)
-    # test_env.reset()
-    # # test_env.get_available_actions()
+    def get_stats(self):
+        stats = {
+            "battles_won": self.battles_won,
+            "battles_game": self.battles_game,
+            "win_rate": self.battles_won / self.battles_game,
+        }
+        return stats

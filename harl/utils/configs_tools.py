@@ -67,7 +67,7 @@ def get_task_name(env, env_args):
     elif env == "lag":
         task = f"{env_args['scenario']}-{env_args['task']}"
     elif env == "huarubattle":
-        task = env_args["env_name"]
+        task = env_args["map_name"]
     return task
 
 

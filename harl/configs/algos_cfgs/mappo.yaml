@@ -32,7 +32,7 @@ train:
   model_dir: ~
 eval:
   # whether to use evaluation
-  use_eval: True
+  use_eval: False
   # number of parallel environments for evaluation
   n_eval_rollout_threads: 10
   # number of episodes per evaluation
