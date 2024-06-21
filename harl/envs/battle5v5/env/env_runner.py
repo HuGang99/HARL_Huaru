@@ -14,7 +14,6 @@ blue_score = 0
 count = 0
 scores = {"red": {}, "blue": {}}
 
-
 class EnvRunner(XSimEnv):
 
     def __init__(self, agents, address, mode: str = 'host'):

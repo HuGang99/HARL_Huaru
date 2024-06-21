@@ -50,6 +50,12 @@ class XSimManager(object):
         # subprocess.Popen(docker_run, shell=True)
         os.system(docker_run)
 
+        # 获取容器ID
+        container_id = subprocess.check_output("docker ps -aqf name={}".format(self.docker_name), shell=True).decode().strip()
+        # 将容器ID写入文件
+        with open("container_id.txt", "a") as f:
+            f.write(container_id + '\n')
+
     def close_env(self):
         # container_info = subprocess.getoutput(f"docker ps -a -f 'name={self.dokcer_name}' --format '{{{{.Status}}}}'")
         # pass

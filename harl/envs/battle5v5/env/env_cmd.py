@@ -18,7 +18,7 @@ class CmdEnv(object):
     """
 
     def entity_info(self, id) -> dict:
-        from .observation_processor import _OBSINIT
+        from harl.envs.battle5v5.env.observation_processor import _OBSINIT
 
         if _OBSINIT is None:
             raise ServerError("无法正确获取战场初始信息，请检查是否正确连接XSIM.")
