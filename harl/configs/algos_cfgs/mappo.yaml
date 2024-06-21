@@ -19,9 +19,9 @@ train:
   # number of steps per environment per training data collection
   episode_length: 80
   # logging interval
-  log_interval: 5
+  log_interval: 30
   # evaluation interval
-  eval_interval: 25
+  eval_interval: 150
   # whether to use ValueNorm
   use_valuenorm: True
   # whether to use linear learning rate decay

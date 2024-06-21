@@ -53,7 +53,7 @@ class XSimManager(object):
         # 获取容器ID
         container_id = subprocess.check_output("docker ps -aqf name={}".format(self.docker_name), shell=True).decode().strip()
         # 将容器ID写入文件
-        with open("container_id.txt", "a") as f:
+        with open("container_ids.txt", "a") as f:
             f.write(container_id + '\n')
 
     def close_env(self):
