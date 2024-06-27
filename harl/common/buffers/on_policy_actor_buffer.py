@@ -46,8 +46,6 @@ class OnPolicyActorBuffer:
 
         # Buffer for available actions of this actor.
         if act_space.__class__.__name__ == "Discrete":
-            print('act_space')
-            print(act_space.shape)
             self.available_actions = np.ones(
                 (self.episode_length + 1, self.n_rollout_threads, act_space.n),
                 dtype=np.float32,

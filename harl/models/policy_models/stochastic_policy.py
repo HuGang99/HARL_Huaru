@@ -29,8 +29,9 @@ class StochasticPolicy(nn.Module):
         self.use_recurrent_policy = args["use_recurrent_policy"]
         self.recurrent_n = args["recurrent_n"]
         self.tpdv = dict(dtype=torch.float32, device=device)
-
+        
         obs_shape = get_shape_from_obs_space(obs_space)
+
         base = CNNBase if len(obs_shape) == 3 else MLPBase
         self.base = base(args, obs_shape)
 

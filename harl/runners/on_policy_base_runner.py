@@ -270,16 +270,6 @@ class OnPolicyBaseRunner:
         """Warm up the replay buffer."""
         # reset env
         obs, share_obs, available_actions = self.envs.reset()
-        # print('obs')
-        # print(obs)
-        # print(type(obs))
-        # print(obs.shape)
-
-        # print('share_obs')
-        # print(share_obs)
-        # print(type(share_obs))
-        # print(share_obs.shape)
-        
         # replay buffer
         for agent_id in range(self.num_agents):
             self.actor_buffer[agent_id].obs[0] = obs[:, agent_id].copy()

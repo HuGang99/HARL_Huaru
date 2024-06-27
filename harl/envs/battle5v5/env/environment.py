@@ -72,7 +72,7 @@ class HuaRuBattleEnvWrapper(EnvRunner):
         # 状态空间
         self.observation_space = [spaces.Box(low=0, high=1, shape=(105,)), spaces.Box(low=0, high=1, shape=(105,)), spaces.Box(low=0, high=1, shape=(105,)), spaces.Box(low=0, high=1, shape=(105,)), spaces.Box(low=0, high=1, shape=(105,))]
         #   全局的状态
-        self.share_observation_space  = [[105 * 5, [5, 105]], [105 * 5, [5, 105]], [105 * 5, [5, 105]], [105 * 5, [5, 105]], [105 * 5, [5, 105]]]
+        self.share_observation_space  = [[105 * 5, [5, 105]]]
 
         # 初始化智能体，红方智能体是用于转换仿真的指令；蓝方智能体适用于利用代码规则
         # 记录红蓝方的每帧的states
@@ -208,7 +208,6 @@ class HuaRuBattleEnvWrapper(EnvRunner):
                 blue_cmd_list = self.get_blue_cmd(self.agents["blue"])
                 cmd_list = []
                 cmd_list.extend(blue_cmd_list)
-                self.last_ori_message = self.ori_message
                 self.ori_message = super().step(cmd_list)
                 self.done, flag_no = super().get_done(self.ori_message)
                 if self.done[0]:
@@ -724,7 +723,7 @@ class HuaRuBattleEnvWrapper(EnvRunner):
         if not cur_agent_exist:
             """说明这个Agent已经不存在了"""
             self.red_agent_loc[str(agent_order)] = None
-            self.agents_speed[str(agent_order)] = -1
+            self.agents_speed[str(agent_order)] = -1    # 此处如此操作是否欠妥
             self.red_death.append(self.cur_agent_id)
         """当前Agent的obs"""
         agent_obs = self.parse_msg(str(agent_order), cur_agent_exist)
